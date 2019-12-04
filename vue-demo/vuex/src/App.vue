@@ -1,0 +1,28 @@
+<template>
+  <div id="app">
+    <product-list-one></product-list-one>
+    <product-list-two></product-list-two>
+  </div>
+</template>
+
+<script>
+import ProductListOne from './component/ProductListOne'
+import ProductListTwo from './component/ProductListTwo'
+
+export default {
+  name: 'app',
+  components:{
+    'product-list-one':ProductListOne,
+    'product-list-two':ProductListTwo
+  },
+  data () {
+    return {
+     
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
