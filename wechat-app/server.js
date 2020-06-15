@@ -35,4 +35,11 @@ app.use("/api/users",users);
 app.use("/api/profiles",profiles);
 
 
+// app.use((req,res,next) => {
+//     res.header('Access-Control-Allow-Origin','*');
+//     res.header('Access-Control-Allow-Header','Content-Type');
+//     res.header('Access-Control-Allow-Methods','PUT,POST,GET,DELETE,OPTIONS');
+//     next();
+// })
+
 

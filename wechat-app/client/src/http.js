@@ -9,7 +9,7 @@ axios.interceptors.request.use(
         }
         return config;
     },error => {
-        return promises.reject(error);
+        return Promise.reject(error);
     }
 )
 //响应拦截
@@ -18,7 +18,7 @@ axios.interceptors.response.use(
         return response;
     },error => {
         const { status } = error.response;
-        if(status = 401){
+        if(status == 401){
             alert("token 过期，请重新登陆");
             localStorage.removeItem("wxpyqToken");
             router.push('/login');
@@ -27,7 +27,7 @@ axios.interceptors.response.use(
             alert(error.response.data);
         }
             
-            return promises.reject(error);
+            return Promise.reject(error);
         }
 )
 
