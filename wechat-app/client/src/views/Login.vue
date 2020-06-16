@@ -4,7 +4,7 @@
     <div class="content">
       <form>
         <InputGroup label="账号" placeholder="请填写邮箱" v-model="user.email" />
-        <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password" />
+        <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password"/>
       </form>
       <div class="btn_wrap">
         <YButton :disabled="isDisabled" @click="loginClick">登录</YButton>
@@ -47,7 +47,7 @@ export default {
         alert("请输入合法的邮箱");
         return;
       }
-
+      
       this.$axios.post("/api/users/login", this.user).then(res => {
         console.log(res);
         const { token } = res.data;

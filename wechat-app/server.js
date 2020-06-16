@@ -25,8 +25,8 @@ app.listen(port,() => {
 const users = require("./routes/api/users");
 const profiles = require("./routes/api/profiles");
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true, limit:'50mb'}));//限制文件大小50mb(兆)
+app.use(bodyParser.json({limit:'50mb'}));
 app.use(passport.initialize());
 require("./config/passport")(passport)
 

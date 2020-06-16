@@ -1,24 +1,24 @@
 <template>
     <div class="circle">
-        <Header title="朋友圈" btn_icon="camera" :isLeft="true"></Header>
+        <Header title="朋友圈" btn_icon="camera" :isLeft="true" @rightClick="$router.push('/publish')"></Header>
         <div class="containder">
-            <div class="scroll-wrap">
-                <div class="head-wrapper">
-                    <div class="user-head">
-                        <span>{{user.name}}</span>
-                        <div class="user-img">
-                            <img :src="user.avatar" alt class="hea-img"/>
+            <Scroll ref="refresh" @pulldown="loadData" @pullup="loadMore">
+                    <div class="head-wrapper">
+                        <div class="user-head">
+                            <span>{{user.name}}</span>
+                            <div class="user-img">
+                                <img :src="user.avatar" alt class="hea-img"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="content-wrapper">
-                    <CellView
-                        v-for="(moment,index) in momentListData"
-                        :key="index"
-                        :momentObj="moment"
-                    />
-                </div>
-            </div>
+                    <div class="content-wrapper">
+                        <CellView
+                            v-for="(moment,index) in momentListData"
+                            :key="index"
+                            :momentObj="moment"
+                        />
+                    </div>
+            </Scroll>
         </div>
     </div>
 </template>
@@ -26,17 +26,21 @@
 <script>
 import Header from '../components/Header';
 import CellView from '../components/CellView';
+import Scroll from '../components/Scroll';
 import jwt_decode from 'jwt-decode';
 
 export default {
     name:'moments',
     components:{
         Header,
-        CellView
+        CellView,
+        Scroll
     },
     data(){
         return {
-            momentListData:[]
+            momentListData:[],
+            page:2,//加载更多从page2开始
+            size:3 //每次请求3条数据
         }
     },
     computed:{
@@ -56,6 +60,35 @@ export default {
             this.$axios.get('/api/profiles/latest')
                 .then(res => {
                     this.momentListData=[...res.data];
+
+                    //注册事件，解决下拉刷新字样重置问题
+                    this.$refs.refresh.$emit("refresh");
+                })
+        },
+        loadData(){
+            this.page =2;
+            this.getLatestData();
+        },
+        loadMore(){
+            this.$axios(`/api/profiles/${this.page}/${this.size}`)
+                .then(res=>{
+                    //console.log(res.data);
+                    const result = [...res.data];
+                    //遍历数组
+                    if(result.length>0){
+                        result.forEach(item=>{
+                            this.momentListData.push(item);
+                        })
+
+                        //自增page
+                        this.page++;
+                    }else{
+                        //数组为空，没有更多数据，page不再自增
+                        this.$refs.refresh.$emit("loadDone");
+                    }
+
+                }).catch(err=>{
+                    console.log(err);
                 })
         }
     }

@@ -32,10 +32,6 @@ const routes = [
         component:()=>import('../views/Discover.vue') //懒加载
       },
       {
-        path:'/moments',
-        component:()=>import('../views/Moments.vue')
-      },
-      {
         path:'/me',
         name:'me',
         component:()=>import('../views/Me.vue') //懒加载
@@ -50,6 +46,14 @@ const routes = [
     path:'/register',
     name:'register',
     component:() => import('../views/Register.vue')
+  },
+  {
+    path:'/moments',
+    component:()=>import('../views/Moments.vue')
+  },
+  {
+    path:'/publish',
+    component:()=>import('../views/Publish.vue')
   }
 ]
 
@@ -60,14 +64,14 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-router.beforeEach((to,from,next) => {
-  const isLogin = localStorage.wxpyqToken ? true : false;
-  if(to.path == '/register' || to.path == '/login'){
-    next();
-  }else{
-    //next();
-    isLogin ? next(): next('/login');
-  }
-})
+// router.beforeEach((to,from,next) => {
+//   const isLogin = localStorage.wxpyqToken ? true : false;
+//   if(to.path == '/register' || to.path == '/login'){
+//     next();
+//   }else{
+//     //next();
+//     isLogin ? next(): next('/login');
+//   }
+// })
 
 export default router

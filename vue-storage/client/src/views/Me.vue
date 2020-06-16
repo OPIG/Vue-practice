@@ -88,4 +88,4 @@ export default {
     box-sizing: border-box;
     padding: 20px;
 }
-</style>>
+</style>

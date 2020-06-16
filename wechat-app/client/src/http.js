@@ -14,8 +14,8 @@ axios.interceptors.request.use(
 )
 //响应拦截
 axios.interceptors.response.use(
-    response => {
-        return response;
+    res => {
+        return res;
     },error => {
         const { status } = error.response;
         if(status == 401){
@@ -26,7 +26,6 @@ axios.interceptors.response.use(
             //错误提醒
             alert(error.response.data);
         }
-            
             return Promise.reject(error);
         }
 )

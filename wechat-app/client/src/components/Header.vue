@@ -6,7 +6,7 @@
         </div>
         <h1 class="header-title">{{title}}</h1>
         <div class="header-button is-right" is-show="btn_icon">
-            <button @click="$emit('click')">
+            <button @click="$emit('rightClick')">
                 <i :class="`fa fa-`+btn_icon"/>
             </button>
         </div>
