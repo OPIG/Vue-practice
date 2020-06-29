@@ -27,6 +27,8 @@ const profiles = require("./routes/api/profiles");
 
 app.use(bodyParser.urlencoded({extended: true, limit:'50mb'}));//限制文件大小50mb(兆)
 app.use(bodyParser.json({limit:'50mb'}));
+
+// passport 初始化
 app.use(passport.initialize());
 require("./config/passport")(passport)
 
@@ -35,6 +37,7 @@ app.use("/api/users",users);
 app.use("/api/profiles",profiles);
 
 
+//服务器端解决跨域问题
 // app.use((req,res,next) => {
 //     res.header('Access-Control-Allow-Origin','*');
 //     res.header('Access-Control-Allow-Header','Content-Type');

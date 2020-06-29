@@ -38,6 +38,11 @@ export default{
             this.InitScroll()
         )
 
+         /*我们在这里把 this.$nextTick 替换成 setTimeout(fn, 20) 也是可以的（20 ms 是一个经验值，每一个 Tick 约为 17 ms）*/
+        /*setTimeout(() => {
+            this.InitScroll()
+        },20);*/
+
     },
     data(){
         return {

@@ -1,3 +1,4 @@
+// @login & register
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
@@ -7,7 +8,9 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
-// @ test
+// @router Get api/users/userlist
+// @desc
+// @access public
 router.get("/userlist",(req,res) => {
     res.json({msg:"login works"});
 })
@@ -16,6 +19,8 @@ router.get("/userlist",(req,res) => {
 // @desc 
 // @access public
 router.post("/register",(req,res) => {
+    //console.log(req.body);
+    //查询数据库中是否有已有邮箱
     User.findOne({email:req.body.email})
         .then(user => {
             if(user){
@@ -49,14 +54,17 @@ router.post("/register",(req,res) => {
 router.post("/login",(req,res) => {
     const email = req.body.email;
     const password = req.body.password;
+    //查询数据库
     User.findOne({email}).then(user => {
         if(!user){
             return res.status(404).json({email:"用户不存在"});
         }
 
+        // 密码匹配
         bcrypt.compare(password,user.password)
             .then(isMatch => {
                 if(isMatch){
+                    //jwt.sign("规则","加密名字","过期时间","箭头函数");
                     const rule = {id: user.id,name:user.name,avatar:user.avatar};
                     jwt.sign(rule,keys.secretOrKey,{expiresIn:3600},(err,token) => {
                         if(err) throw err;
@@ -76,9 +84,10 @@ router.post("/login",(req,res) => {
     }).catch(err => console.log(err));
 })
 
-// @route GET api/users/current
-// @desc
+// @route Get api/users/current
+// @desc return current user
 // @access private
+//router.get("route","验证token","箭头函数");
 router.get("/current",passport.authenticate("jwt",{session:false}), (req,res) => {
     res.json({
         id:req.user.id,
