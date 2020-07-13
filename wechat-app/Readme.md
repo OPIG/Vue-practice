@@ -13,6 +13,7 @@
 
 
 //服务器端解决跨域问题  --安全性不好
+```
 app.use((req,res,next) => {
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Headers','Content-Type');
