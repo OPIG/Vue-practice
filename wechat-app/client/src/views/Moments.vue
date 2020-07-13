@@ -40,7 +40,8 @@ export default {
         return {
             momentListData:[],
             page:2,//加载更多从page2开始
-            size:3 //每次请求3条数据
+            size:3, //每次请求3条数据
+            loading:false
         }
     },
     computed:{
@@ -57,8 +58,13 @@ export default {
     },
     methods: {
         getLatestData(){
+            if(this.loadding) return;
+            this.loading=true;
+
             this.$axios.get('/api/profiles/latest')
                 .then(res => {
+                    this.loading=false;
+                    
                     this.momentListData=[...res.data];
 
                     //注册事件，解决下拉刷新字样重置问题
@@ -70,8 +76,13 @@ export default {
             this.getLatestData();
         },
         loadMore(){
+            if(this.loadding) return;
+            this.loading=true;
+
             this.$axios(`/api/profiles/${this.page}/${this.size}`)
                 .then(res=>{
+                    this.loading=false;
+
                     //console.log(res.data);
                     const result = [...res.data];
                     //遍历数组

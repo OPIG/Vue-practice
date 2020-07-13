@@ -8,21 +8,26 @@
             <div class="text_wrap">
                 <textarea placeholder ="leave your message..." v-model="text"></textarea>
 
-                <Upload @getImgs="getImgs"/>
+                <!-- 文件上传 -->
+                <Upload :loading="loading" @getImgs="getImgs"/>
             </div>
         </div>
+        <Loading :loading="loading" />
     </div>
 </template>
 
 <script>
 import Upload from '../components/Upload'
+import Loading from '../components/Loading'
+
 import jwt_decode from 'jwt-decode'
 export default{
     name:"publish",
     data(){
         return {
             text:'',
-            imgs:[]
+            imgs:[],
+            loading:true
         }
     },
     methods:{
@@ -37,6 +42,8 @@ export default{
             //请求
             this.$axios.post("/api/profiles/add",postData)
                 .then(res=>{
+                    this.loading=false;
+
                     //发布成功后跳转
                     this.$router.push("/moments")
                 }).catch((err)=>{
@@ -54,7 +61,7 @@ export default{
             let reader = new FileReader();
             const _this = this;
 
-            reader.onload=function(){
+            reader.onload=function(e){
                 //console.log(e.target.result);
                 _this.imgs.push(e.target.result);
             };
@@ -62,7 +69,8 @@ export default{
         }
     },
     components:{
-        Upload
+        Upload,
+        Loading
     },
     computed:{
         user(){

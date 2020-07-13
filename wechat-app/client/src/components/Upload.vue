@@ -1,14 +1,14 @@
 <template>
    <div class="img_wrap">
         <div class="isImg" 
-            v-if="showFileData.length<9"
+            v-if="showFileData.length>0"
             v-for="(file_img,index) in showFileData"
             :key="index"
         >
             <img :src="file_img" alt="">
-            <button class="remove" @click="removeImg(file_img)">x</button>
+            <button v-show="!loading" class="remove" @click="removeImg(file_img)">x</button>
         </div>
-        <div class="isImg img_upload">
+        <div class="isImg img_upload" v-if="showFileData.length<9">
             <button class="btn_upload">
                 <input @change="addFile" type="file" ref="myFile" multiple="multiple" accept="img/*">
             </button>
@@ -19,6 +19,12 @@
 <script>
 export default {
     name:'upload',
+    props:{
+        loading:{
+            type:Boolean,
+            default:false
+        }
+    },
     data(){
         return{
             showFileData:[]
@@ -38,6 +44,9 @@ export default {
                     let obuUrl = this.getObjectURL(file);
                     this.showFileData.push(obuUrl);
                 })
+
+                //注册事件 让调用方法执行
+                this.$emit('getImgs',this.allUploadFiles);
         },
         getObjectURL(file){
             let url = null;

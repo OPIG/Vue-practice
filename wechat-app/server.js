@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const app = express();
+const path = require('path');
 
 app.get("/",(req,res) => {
     res.send("Hello Vue World!");
@@ -35,6 +36,15 @@ require("./config/passport")(passport)
 //middleware
 app.use("/api/users",users);
 app.use("/api/profiles",profiles);
+
+
+//执行前端静态页面
+if(process.env.Node_ENV ==='production'){
+    app.use(express.static('client/dist'));
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'client','dist','index.html'));
+    })
+}
 
 
 //服务器端解决跨域问题

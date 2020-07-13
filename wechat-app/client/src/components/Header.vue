@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-button is-left" v-show="isLeft">
             <i class="fa fa-chevron-left"></i>
-            <button @click="$router.go(-1)">Go back</button>
+            <button @click="$router.push('/moments')">Go back</button>
         </div>
         <h1 class="header-title">{{title}}</h1>
         <div class="header-button is-right" is-show="btn_icon">
