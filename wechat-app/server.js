@@ -38,11 +38,11 @@ app.use("/api/users",users);
 app.use("/api/profiles",profiles);
 
 
-//执行前端静态页面
+//执行前端静态页面（打包到heroku后）
 if(process.env.Node_ENV ==='production'){
     app.use(express.static('client/dist'));
     app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname,'client','dist','index.html'));
+        res.sendFile(path.resolve(__dirname,'client','dist','index.html'));//如果是react项目则将dist 改为build
     })
 }
 
