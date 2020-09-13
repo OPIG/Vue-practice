@@ -51,7 +51,7 @@ export default{
                 text:"下拉刷新",
                 showLoading:false
             },
-            isDone:false
+            isDone:true
         }
     },
     methods:{

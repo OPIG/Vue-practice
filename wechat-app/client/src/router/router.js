@@ -64,14 +64,14 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-// router.beforeEach((to,from,next) => {
-//   const isLogin = localStorage.wxpyqToken ? true : false;
-//   if(to.path == '/register' || to.path == '/login'){
-//     next();
-//   }else{
-//     //next();
-//     isLogin ? next(): next('/login');
-//   }
-// })
+router.beforeEach((to,from,next) => {
+  const isLogin = localStorage.wxpyqToken ? true : false;
+  if(to.path == '/register' || to.path == '/login'){
+    next();
+  }else{
+    //next();
+    isLogin ? next(): next('/login');
+  }
+})
 
 export default router

@@ -67,6 +67,7 @@ export default {
                     
                     this.momentListData=[...res.data];
 
+debugger;
                     //注册事件，解决下拉刷新字样重置问题
                     this.$refs.refresh.$emit("refresh");
                 })
