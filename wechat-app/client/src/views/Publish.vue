@@ -27,7 +27,7 @@ export default{
         return {
             text:'',
             imgs:[],
-            loading:true
+            loading:false
         }
     },
     methods:{
@@ -86,7 +86,7 @@ export default{
 
 <style scope>
     .publish{
-        widht: 100%;
+        width: 100%;
         height: 100%;
         position:relative;
         overflow:hidden;
@@ -111,7 +111,7 @@ export default{
     }
 
     .content{
-        paddding: 16px;
+        padding: 16px;
         box-sizing:border-box;
         width: 100%
     }
