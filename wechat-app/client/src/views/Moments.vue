@@ -17,6 +17,7 @@
                             :key="index"
                             :momentObj="moment"
                         />
+                        <Loading :loading="loading" />
                     </div>
             </Scroll>
         </div>
@@ -28,13 +29,15 @@ import Header from '../components/Header';
 import CellView from '../components/CellView';
 import Scroll from '../components/Scroll';
 import jwt_decode from 'jwt-decode';
+import Loading from '../components/Loading'
 
 export default {
     name:'moments',
     components:{
         Header,
         CellView,
-        Scroll
+        Scroll,
+        Loading
     },
     data(){
         return {
@@ -58,7 +61,7 @@ export default {
     },
     methods: {
         getLatestData(){
-            if(this.loadding) return;
+            if(this.loading) return;
             this.loading=true;
 
             this.$axios.get('/api/profiles/latest')
@@ -76,7 +79,7 @@ export default {
             this.getLatestData();
         },
         loadMore(){
-            if(this.loadding) return;
+            if(this.loading) return;
             this.loading=true;
 
             this.$axios(`/api/profiles/${this.page}/${this.size}`)
@@ -147,5 +150,10 @@ export default {
   width: 200px;
   text-align: right;
   color: #fff;
+}
+
+.content-wrapper{
+    position: relative;
+    min-height: 300px;
 }
 </style>

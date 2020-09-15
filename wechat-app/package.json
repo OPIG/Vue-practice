@@ -21,7 +21,8 @@
     "mongoose": "^5.7.10",
     "nodemon": "^1.19.4",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "vconsole": "^3.3.4"
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
